@@ -14,4 +14,4 @@
   <http>
 <intercept-url pattern="/**" access="permitAll" />
 </http>
-</beans:beans> test code
+</beans:beans>
