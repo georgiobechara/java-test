@@ -1,38 +1,11 @@
-package com.codiscope.jaks.triggers.java.command;
+package com.test.georgio.triggers.java.http;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-/**
- * The class CommandInjection
- * GUID-620
- */
-public class CommandInjection {
-
-    private PrivateSource privateSource = new PrivateSource();
-
-    /**
-     * Test which should be found by Jacks
-     */
-    public void positiveTest() throws IOException {
-        String command = privateSource.method1();
-        Runtime runtime = Runtime.getRuntime();
-        String [] strings = getStrings();
-        File file = getFile();
-        runtime.exec(command);
-        runtime.exec(command, strings);
-        runtime.exec(command, strings, file);
-        runtime.exec(strings);
-        runtime.exec(strings, strings);
-        runtime.exec(strings, strings, file);
+public class Header_Injection_Set_Header_Test {
+    public void doWork(HttpServletRequest request, HttpServletResponse response) {
+        String username = request.getParameter("name");
+        response.setHeader("name", username);
     }
-
-    private File getFile(){
-        return null;
-    }
-
-    private String [] getStrings(){
-        return null;
-    }
-
 }
