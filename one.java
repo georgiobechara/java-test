@@ -1,65 +1,38 @@
-package com.codiscope.jaks.triggers.java.spring.jdbc.simplejdbctemplate;
+package com.codiscope.jaks.triggers.java.command;
 
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-
-import javax.sql.DataSource;
-
-import tests.sources.DatabaseSource;
-import tests.sources.FileSource;
-import tests.sources.PrivateSource;
-import tests.sources.WebSource;
-import tests.sources.WebSourceCookie;
+import java.io.File;
+import java.io.IOException;
 
 /**
- * The Class JavaSpringJdbcSimplejdbctemplateSqli
+ * The class CommandInjection
+ * GUID-620
  */
-public class JavaSpringJdbcSimplejdbctemplateSqli {
+public class CommandInjection {
 
-    private WebSourceCookie webcookie = new WebSourceCookie();
-    private DatabaseSource databasesource = new DatabaseSource();
-    private FileSource filesource = new FileSource();
-    private PrivateSource privatesource = new PrivateSource();
-    private WebSource websource = new WebSource();
+    private PrivateSource privateSource = new PrivateSource();
 
-    private SimpleJdbcTemplate template;
-
-    public JavaSpringJdbcSimplejdbctemplateSqli(DataSource dataSource) {
-        this.template = new SimpleJdbcTemplate(dataSource);
+    /**
+     * Test which should be found by Jacks
+     */
+    public void positiveTest() throws IOException {
+        String command = privateSource.method1();
+        Runtime runtime = Runtime.getRuntime();
+        String [] strings = getStrings();
+        File file = getFile();
+        runtime.exec(command);
+        runtime.exec(command, strings);
+        runtime.exec(command, strings, file);
+        runtime.exec(strings);
+        runtime.exec(strings, strings);
+        runtime.exec(strings, strings, file);
     }
 
-    public void testQuery() {
-
-        String query = "SELECT COF_NAME FROM COFFEES WHERE ID=" + websource.method2();
-
-        //Test SimpleJdbcOperations query
-        template.query(query, null);
-
-        //Test SimpleJdbcOperations queryForList
-        template.queryForList(query);
-
-        //Test SimpleJdbcOperations queryForInt
-        template.queryForInt(query);
-
-        //Test SimpleJdbcOperations queryForLong
-        template.queryForLong(query);
-
-        //Test SimpleJdbcOperations queryForMap
-        template.queryForMap(query);
-
-        //Test SimpleJdbcOperations queryForObject
-        template.queryForObject(query, String.class);
+    private File getFile(){
+        return null;
     }
 
-    //Test SimpleJdbcOperations Update
-    public void testUpdate() {
-        template.update(databasesource.method1());
+    private String [] getStrings(){
+        return null;
     }
 
-    //Test SimpleJdbcOperations batchUpdate & Execute
-    public void testBatchUpdate() {
-        template.getJdbcOperations().batchUpdate(new String[]{websource.method2()});
-
-        //Test SimpleJdbcOperations execute
-        template.getJdbcOperations().execute(websource.method2());
-    }
 }
